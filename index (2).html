@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-site-verification" content="a-rMP4vXcqmZsuQVhnsrQZ3G9A0Ao6GYVouPvCYNFyo" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Gaon To Growth: a proposed digital marketplace for Pattachitra artisans of Raghurajpur. Team Rural Rise, Innovate Odisha 3.0.">
+<title>Gaon To Growth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Noto+Sans+Oriya:wght@500&family=Rozha+One&display=swap">
+<style>
+/* Layout: a painted scroll. A dark hero panel framed by a Pattachitra diamond border, chalk sections between, and three full-width colour fields (indigo, ochre, soot). */
+:root {
+  /* Pigments, constant in both themes: hingula red, haritala yellow, neel indigo, lamp soot, conch white */
+  --soot: #1B1511;
+  --conch: #F6F0E2;
+  --hingula: #C0301C;
+  --haritala: #E8AE1D;
+  --neel: #22386A;
+
+  /* Type */
+  --font-display: 'Rozha One', 'Noto Serif', Georgia, serif;
+  --font-body: 'Hind', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-odia: 'Noto Sans Oriya', 'Nirmala UI', sans-serif;
+
+  /* Theme tokens, light */
+  --bg: #FBFAF6;
+  --surface: #FFFFFF;
+  --sunk: #F1EEE6;
+  --fg: #1E1814;
+  --muted: #5B5249;
+  --line: #DDD6C8;
+  --accent: #B92B18;
+  --accent-fg: #FFF8EE;
+  --accent-text: #B92B18;
+  --eyebrow: var(--accent-text);
+  --focus: #22386A;
+  --hero-bg: #1B1511;
+  --hero-fg: #F6F0E2;
+  --hero-muted: #CFC5B3;
+  --indigo-bg: #22386A;
+  --indigo-fg: #F6F0E2;
+  --indigo-muted: #C4CCE2;
+  --ochre-bg: #E8AE1D;
+  --ochre-fg: #1E1814;
+  --ochre-muted: #4A3A12;
+
+  scroll-padding-top: 4.5rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14100D;
+    --surface: #1F1A15;
+    --sunk: #1A1511;
+    --fg: #F1EBDD;
+    --muted: #B5AA99;
+    --line: #3A322A;
+    --accent: #C93B25;
+    --accent-fg: #FFF8EE;
+    --accent-text: #F08A72;
+    --focus: #EDB93B;
+    --hero-bg: #0D0A08;
+    --indigo-bg: #1A2749;
+    --ochre-bg: #DDA420;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14100D;
+  --surface: #1F1A15;
+  --sunk: #1A1511;
+  --fg: #F1EBDD;
+  --muted: #B5AA99;
+  --line: #3A322A;
+  --accent: #C93B25;
+  --accent-fg: #FFF8EE;
+  --accent-text: #F08A72;
+  --focus: #EDB93B;
+  --hero-bg: #0D0A08;
+  --indigo-bg: #1A2749;
+  --ochre-bg: #DDA420;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: var(--hero-bg);
+}
+
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; max-width: 64ch; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* Colour fields set local tokens so every component reads correctly inside them */
+.on-dark {
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  --fg: var(--hero-fg);
+  --muted: var(--hero-muted);
+  --line: rgba(246, 240, 226, 0.22);
+  --eyebrow: #EDB93B;
+  --focus: #EDB93B;
+}
+.band--indigo {
+  background: var(--indigo-bg);
+  color: var(--indigo-fg);
+  --fg: var(--indigo-fg);
+  --muted: var(--indigo-muted);
+  --line: rgba(246, 240, 226, 0.28);
+  --eyebrow: #F2C94C;
+  --focus: #F2C94C;
+}
+.band--ochre {
+  background: var(--ochre-bg);
+  color: var(--ochre-fg);
+  --fg: var(--ochre-fg);
+  --muted: var(--ochre-muted);
+  --line: rgba(30, 24, 20, 0.3);
+  --eyebrow: #6E190D;
+  --focus: #22386A;
+}
+.band--sunk { background: var(--sunk); }
+
+.wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) {
+  .wrap {
+    padding-left: max(32px, env(safe-area-inset-left, 0px));
+    padding-right: max(32px, env(safe-area-inset-right, 0px));
+  }
+}
+.band > .wrap { padding-top: clamp(3.5rem, 8vw, 6rem); padding-bottom: clamp(3.5rem, 8vw, 6rem); }
+
+.skip { position: absolute; left: -999px; top: 0; background: var(--surface); color: var(--fg); padding: .5rem 1rem; z-index: 60; }
+.skip:focus { left: 8px; }
+
+/* Header */
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; border-bottom: 1px solid var(--line); }
+.head-row { display: flex; align-items: center; gap: 1rem; padding-top: .5rem; padding-bottom: .5rem; }
+.brand { font-family: var(--font-display); font-size: 1.25rem; text-decoration: none; white-space: nowrap; flex: none; }
+.nav { display: flex; gap: .25rem; margin-left: auto; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { color: var(--muted); text-decoration: none; padding: .5rem .75rem; font-weight: 500; font-size: .95rem; border-radius: 3px; }
+.nav a:hover { color: var(--fg); background: rgba(246, 240, 226, 0.08); }
+
+/* Type */
+.eyebrow { font-weight: 600; font-size: .8125rem; letter-spacing: .14em; text-transform: uppercase; color: var(--eyebrow); }
+.sec-head { display: grid; gap: .75rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.1; max-width: 22ch; }
+h3 { font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
+.label { font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.statement { font-family: var(--font-display); font-size: clamp(1.6rem, 3.2vw, 2.25rem); line-height: 1.25; max-width: 32ch; }
+.muted { color: var(--muted); }
+.stack { display: grid; gap: 1rem; }
+.stack-sm { display: grid; gap: .5rem; }
+.stack-lg { display: grid; gap: 2rem; align-content: start; }
+
+.marks { display: grid; gap: .6rem; }
+.marks li { position: relative; padding-left: 1.25rem; }
+.marks li::before { content: ""; position: absolute; left: 0; top: .72em; width: .45rem; height: .45rem; background: var(--eyebrow); transform: rotate(45deg); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .6rem 1.25rem; border: 1.5px solid transparent; border-radius: 3px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; background: var(--accent); color: var(--accent-fg); }
+.btn:hover { filter: brightness(1.1); }
+.btn--ghost { background: transparent; color: var(--fg); border-color: currentColor; }
+.btn--ghost:hover { filter: none; background: rgba(246, 240, 226, 0.1); }
+.btn--small { min-height: 40px; padding: .4rem .9rem; font-size: .95rem; }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+/* Pattachitra border: chain of diamonds, red on soot, with yellow rules */
+.patta {
+  height: 20px;
+  border-block: 2px solid var(--haritala);
+  background-color: var(--soot);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='20' viewBox='0 0 28 20'%3E%3Crect width='28' height='20' fill='%231B1511'/%3E%3Cpath d='M14 2L24 10L14 18L4 10Z' fill='%23C0301C'/%3E%3Ccircle cx='14' cy='10' r='2.6' fill='%23E8AE1D'/%3E%3Ccircle cx='0' cy='10' r='1.6' fill='%23F6F0E2'/%3E%3Ccircle cx='28' cy='10' r='1.6' fill='%23F6F0E2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 28px 20px;
+  background-position: center;
+}
+
+/* Hero */
+.hero > .wrap { padding-top: clamp(2.5rem, 7vw, 5rem); padding-bottom: clamp(2.5rem, 7vw, 5rem); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 2.5rem; align-items: center; }
+.hero-copy { display: grid; gap: 1.5rem; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(3.25rem, 10vw, 7rem); line-height: .98; letter-spacing: -.01em; }
+.region { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; font-size: 1.125rem; color: var(--muted); }
+.odia { font-family: var(--font-odia); font-weight: 500; color: var(--fg); font-size: 1.25rem; }
+.lines { display: grid; gap: .35rem; font-size: 1.2rem; font-weight: 500; }
+.lines li { position: relative; padding-left: 1.5rem; }
+.lines li::before { content: ""; position: absolute; left: .15rem; top: .62em; width: .5rem; height: .5rem; background: var(--haritala); transform: rotate(45deg); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.meta-row > div { display: grid; gap: .15rem; min-width: 0; }
+.hero-art { width: 100%; max-width: 30rem; justify-self: center; aspect-ratio: 1; }
+.hero-art svg { display: block; width: 100%; height: 100%; }
+.h-ring { fill: none; stroke: var(--haritala); stroke-width: 2; stroke-dasharray: .1 7; stroke-linecap: round; }
+.h-line { fill: none; stroke: var(--hingula); stroke-width: 2.5; }
+.h-out use { fill: var(--hingula); stroke: var(--haritala); stroke-width: 1; }
+.h-in use { fill: var(--haritala); stroke: var(--soot); stroke-width: 1; }
+.spin { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) { .spin { animation: spin 120s linear infinite; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-art { max-width: 20rem; }
+}
+
+/* Problem */
+.problem-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: clamp(2rem, 4vw, 3rem); }
+.callout { display: grid; gap: .5rem; padding: 1.5rem; border-radius: 3px; align-content: start; }
+.callout--plain { background: var(--surface); border: 1px solid var(--line); }
+.callout p { font-size: 1.125rem; }
+@media (max-width: 800px) {
+  .problem-grid, .duo { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Research */
+.note { display: inline-flex; gap: .75rem; align-items: baseline; padding: .6rem 1rem; border: 1px solid var(--line); background: var(--surface); border-radius: 3px; max-width: 100%; margin-bottom: 2rem; }
+.tag { flex: none; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .5rem; background: var(--haritala); color: #1E1814; border-radius: 2px; }
+.grid-3 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+.grid-4 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+.grid-2 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+@media (min-width: 900px) { .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; } }
+@media (min-width: 640px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem; } }
+.col { display: grid; gap: 1rem; align-content: start; padding-top: 1rem; border-top: 2px solid var(--fg); }
+.finding { display: grid; gap: .25rem; }
+.evidence { margin-top: clamp(2rem, 4vw, 3rem); padding: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; display: grid; gap: 1rem; }
+
+/* Existing solutions */
+.channels { display: grid; border-bottom: 1px solid var(--line); }
+.channel { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr) minmax(0, 1.2fr); gap: 1rem 2rem; padding-block: 1.5rem; border-top: 1px solid var(--line); }
+.channel h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; line-height: 1.2; }
+.cell { display: grid; gap: .25rem; align-content: start; }
+@media (max-width: 800px) { .channel { grid-template-columns: minmax(0, 1fr); } }
+.insight { margin-top: clamp(2rem, 4vw, 3rem); display: grid; gap: .75rem; }
+
+/* Gaps */
+.gap-item { display: grid; gap: .75rem; align-content: start; padding-top: 1rem; border-top: 1px solid var(--line); }
+.gap-item h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.6rem; }
+.opportunity { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: .75rem; }
+.opportunity .statement { max-width: 36ch; }
+
+/* Idea */
+.idea-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+@media (min-width: 900px) { .idea-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 4rem; } }
+.approach { display: grid; gap: .25rem; font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.25; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid var(--fg); }
+.flow { display: grid; gap: 0; }
+.step { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0 1rem; padding-bottom: 2rem; }
+.step:last-child { padding-bottom: 0; }
+.step:not(:last-child)::after { content: ""; position: absolute; left: 1.25rem; top: 3.1rem; bottom: .5rem; border-left: 2px dotted var(--line); }
+.step-n { font-family: var(--font-display); font-size: 2.5rem; line-height: 1; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.step-b { display: grid; gap: .25rem; }
+
+/* Sample listing */
+.sample { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+@media (min-width: 900px) { .sample { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3.5rem; align-items: start; } }
+.art-wrap { display: grid; gap: .75rem; }
+.art { aspect-ratio: 1; width: 100%; max-width: 28rem; border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+.art svg { display: block; width: 100%; height: 100%; }
+.picks { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+.pick { font: inherit; font-weight: 500; font-size: .95rem; min-height: 40px; padding: .35rem .9rem; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 3px; cursor: pointer; }
+.pick:hover { border-color: var(--fg); }
+.pick[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.spec { display: grid; border-bottom: 1px solid var(--line); }
+.spec > div { display: grid; grid-template-columns: minmax(7.5rem, 10rem) minmax(0, 1fr); gap: 1rem; padding-block: .7rem; border-top: 1px solid var(--line); align-items: baseline; }
+.spec dt { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.spec dd { min-width: 0; }
+.price { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+.enquiry { margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; display: grid; gap: 1rem; }
+.field { display: grid; gap: .3rem; }
+.field label { font-size: .9rem; font-weight: 600; }
+.field input, .field textarea { font: inherit; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 3px; padding: .55rem .7rem; width: 100%; min-width: 0; }
+.field textarea { min-height: 5.5rem; resize: vertical; }
+.status { font-size: .95rem; min-height: 1.4em; }
+
+/* Build */
+.sys { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.25rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
+.sys-box { position: relative; display: grid; gap: .4rem; padding: 1.25rem; background: var(--surface); border: 1.5px solid var(--fg); border-radius: 3px; align-content: start; }
+.sys-box + .sys-box::before { content: "\2193"; position: absolute; left: 1.25rem; top: -1.9rem; font-size: 1.4rem; line-height: 1; color: var(--accent-text); font-weight: 700; }
+@media (min-width: 900px) {
+  .sys { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
+  .sys-box + .sys-box::before { content: "\2192"; left: -2.2rem; top: 1.1rem; }
+}
+
+/* Impact */
+.measures { margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: 1.5rem; border-top: 2px solid var(--fg); display: grid; gap: 1.25rem; }
+.measures ul { columns: 2 18rem; column-gap: 2.5rem; }
+.measures li { break-inside: avoid; margin-bottom: .6rem; }
+
+/* Plan */
+.pilot { margin-top: clamp(2.5rem, 5vw, 4rem); padding: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; display: grid; gap: 2rem; }
+.pilot-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+@media (min-width: 700px) { .pilot-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; } }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip { padding: .3rem .9rem; border: 1.5px solid var(--fg); border-radius: 999px; font-weight: 600; font-size: .95rem; }
+.timeline { display: grid; gap: .5rem; }
+.bar { position: relative; height: 1.6rem; background: var(--sunk); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+.bar .solid { position: absolute; inset: 0 auto 0 0; width: 66.667%; background: var(--accent); }
+.bar .range { position: absolute; inset: 0 0 0 66.667%; background: repeating-linear-gradient(135deg, var(--accent) 0 4px, transparent 4px 9px); }
+.ticks { display: flex; justify-content: space-between; font-size: .8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Team */
+.team-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+@media (min-width: 900px) { .team-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 4rem; align-items: start; } }
+.thanks { font-family: var(--font-display); font-size: clamp(3rem, 9vw, 6rem); line-height: 1; }
+.team-list { display: grid; border-bottom: 1px solid var(--line); }
+.team-list > div { display: grid; grid-template-columns: minmax(7.5rem, 10rem) minmax(0, 1fr); gap: 1rem; padding-block: .9rem; border-top: 1px solid var(--line); align-items: baseline; }
+.team-list dt { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.team-list dd { min-width: 0; }
+.members { display: grid; grid-template-columns: minmax(0, 1fr); gap: .75rem 1.5rem; }
+@media (min-width: 520px) { .members { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.members li { display: grid; }
+.phone-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: .25rem; }
+.phone { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 1.15rem; letter-spacing: .02em; user-select: all; }
+.foot-note { margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); max-width: 70ch; }
+body { margin: 0; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head on-dark">
+  <div class="wrap head-row">
+    <a class="brand" href="#top">Gaon To Growth</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#problem">Problem</a>
+      <a href="#research">Research</a>
+      <a href="#idea">Idea</a>
+      <a href="#sample">Sample listing</a>
+      <a href="#build">Build</a>
+      <a href="#impact">Impact</a>
+      <a href="#plan">Plan</a>
+      <a href="#team">Team</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero on-dark" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Innovate Odisha 3.0 &middot; Hackathon idea</p>
+        <h1 id="hero-title">Gaon To<br>Growth</h1>
+        <p class="region">A proposed digital marketplace for Pattachitra artisans of Raghurajpur <span class="odia" lang="or">ପଟ୍ଟଚିତ୍ର</span></p>
+        <ul class="lines">
+          <li>Bridging Tradition and Technology,</li>
+          <li>Connecting Artisans to New Markets,</li>
+          <li>Creating Sustainable Growth.</li>
+        </ul>
+        <div class="actions">
+          <a class="btn" href="#idea">See the idea</a>
+          <a class="btn btn--ghost" href="#sample">Try a sample listing</a>
+        </div>
+        <div class="meta-row">
+          <div><span class="label">Team</span><span>Rural Rise</span></div>
+          <div><span class="label">Institution</span><span>Nalanda Institute of Technology, Bhubaneswar</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <defs>
+            <path id="pet-o" d="M0 -92C17 -74 17 -50 0 -36C-17 -50 -17 -74 0 -92Z"/>
+            <path id="pet-i" d="M0 -60C11 -50 11 -34 0 -24C-11 -34 -11 -50 0 -60Z"/>
+          </defs>
+          <circle r="106" class="h-ring"/>
+          <circle r="99" class="h-line"/>
+          <g class="spin">
+            <g class="h-out">
+              <use href="#pet-o"/>
+              <use href="#pet-o" transform="rotate(30)"/>
+              <use href="#pet-o" transform="rotate(60)"/>
+              <use href="#pet-o" transform="rotate(90)"/>
+              <use href="#pet-o" transform="rotate(120)"/>
+              <use href="#pet-o" transform="rotate(150)"/>
+              <use href="#pet-o" transform="rotate(180)"/>
+              <use href="#pet-o" transform="rotate(210)"/>
+              <use href="#pet-o" transform="rotate(240)"/>
+              <use href="#pet-o" transform="rotate(270)"/>
+              <use href="#pet-o" transform="rotate(300)"/>
+              <use href="#pet-o" transform="rotate(330)"/>
+            </g>
+            <g class="h-in">
+              <use href="#pet-i" transform="rotate(15)"/>
+              <use href="#pet-i" transform="rotate(45)"/>
+              <use href="#pet-i" transform="rotate(75)"/>
+              <use href="#pet-i" transform="rotate(105)"/>
+              <use href="#pet-i" transform="rotate(135)"/>
+              <use href="#pet-i" transform="rotate(165)"/>
+              <use href="#pet-i" transform="rotate(195)"/>
+              <use href="#pet-i" transform="rotate(225)"/>
+              <use href="#pet-i" transform="rotate(255)"/>
+              <use href="#pet-i" transform="rotate(285)"/>
+              <use href="#pet-i" transform="rotate(315)"/>
+              <use href="#pet-i" transform="rotate(345)"/>
+            </g>
+          </g>
+          <circle r="17" fill="#F6F0E2"/>
+          <circle r="10" fill="#C0301C"/>
+          <circle r="4" fill="#1B1511"/>
+        </svg>
+      </div>
+    </div>
+    <div class="patta" aria-hidden="true"></div>
+  </section>
+
+  <section class="band" id="problem" aria-labelledby="problem-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Problem statement</p>
+        <h2 id="problem-h">Reaching buyers and setting fair prices</h2>
+      </header>
+      <div class="problem-grid">
+        <div class="stack">
+          <p class="statement">Pattachitra artisans may face challenges reaching buyers directly and presenting their products to wider markets.</p>
+          <p>Limited market access and unclear price comparisons may affect their ability to negotiate fair prices.</p>
+        </div>
+        <div class="stack-lg">
+          <div class="stack-sm">
+            <h3>Who is affected</h3>
+            <p>Pattachitra artisans, their families, young craft workers and customers seeking authentic local artwork.</p>
+          </div>
+          <div class="stack-sm">
+            <h3>Why it matters now</h3>
+            <p>A simple digital catalogue could help artisans display their work, set their own prices and receive buyer enquiries directly. Its benefits must be tested.</p>
+          </div>
+        </div>
+      </div>
+      <div class="duo">
+        <div class="callout band--ochre">
+          <p class="eyebrow">Local challenge</p>
+          <p>Understand artisans&rsquo; real selling difficulties before proposing a solution.</p>
+        </div>
+        <div class="callout callout--plain">
+          <p class="eyebrow">Evidence and scale</p>
+          <p>Raghurajpur is known for Pattachitra art. We will interview artisans and compare prices of similar artworks to understand local selling challenges.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="research" aria-labelledby="research-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Research and validation</p>
+        <h2 id="research-h">Testing the problem before building</h2>
+      </header>
+      <p class="note"><span class="tag">Proposed</span><span>Interviews and surveys are planned. They stay labelled as proposed until fieldwork is complete.</span></p>
+      <div class="grid-3">
+        <div class="col">
+          <h3>Desk research</h3>
+          <ul class="marks">
+            <li>Research Raghurajpur&rsquo;s Pattachitra community using reliable government sources, academic studies and dated news reports.</li>
+            <li>Review existing craft-selling channels and relevant support programmes.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>User validation</h3>
+          <ul class="marks">
+            <li>Interview Pattachitra artisans about their current selling methods.</li>
+            <li>Ask how they record production costs and set selling prices.</li>
+            <li>Compare prices of similar artworks where reliable data is available.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Key findings to verify</h3>
+          <div class="stack">
+            <div class="finding"><span class="label">Finding 1</span><p>Artisan dependence on intermediaries needs local verification.</p></div>
+            <div class="finding"><span class="label">Finding 2</span><p>Price transparency and direct market access need to be investigated.</p></div>
+            <div class="finding"><span class="label">Finding 3</span><p>The usefulness of digital selling must be tested with artisans.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="evidence">
+        <h3>How evidence will be shown</h3>
+        <ul class="marks">
+          <li>Verified government portals, academic studies and dated articles, each with an active link.</li>
+          <li>Every interview and survey labelled as proposed until fieldwork is complete.</li>
+          <li>Direct artisan quotes placed beside price comparisons of equivalent artwork.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="today" aria-labelledby="today-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Existing solutions</p>
+        <h2 id="today-h">What artisans use today</h2>
+      </header>
+      <div class="channels">
+        <div class="channel">
+          <h3>Village and exhibition sales</h3>
+          <div class="cell"><span class="label">What it does well</span><p>Buyers can inspect artwork and meet artisans directly.</p></div>
+          <div class="cell"><span class="label">Limitation or cost</span><p>Reach may depend on visitor numbers, events and travel costs.</p></div>
+        </div>
+        <div class="channel">
+          <h3>Traders and intermediaries</h3>
+          <div class="cell"><span class="label">What it does well</span><p>May connect artisans to wider markets and handle transport or bulk orders.</p></div>
+          <div class="cell"><span class="label">Limitation or cost</span><p>Price breakdowns and artisan earnings may not always be transparent.</p></div>
+        </div>
+        <div class="channel">
+          <h3>Social media and direct orders</h3>
+          <div class="cell"><span class="label">What it does well</span><p>Allows product promotion and direct communication with buyers.</p></div>
+          <div class="cell"><span class="label">Limitation or cost</span><p>Requires digital skills, product photos and order coordination.</p></div>
+        </div>
+      </div>
+      <div class="insight">
+        <p class="eyebrow">Key insight</p>
+        <p class="statement">Existing channels help artisans reach buyers. Gaon To Growth aims to make product information, pricing and buyer enquiries easier to manage in one place.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--indigo" id="gaps" aria-labelledby="gaps-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Gaps and opportunity</p>
+        <h2 id="gaps-h">What today&rsquo;s channels still leave open</h2>
+      </header>
+      <div class="grid-4">
+        <div class="gap-item">
+          <h3>Access</h3>
+          <p>A simple mobile-friendly catalogue and guided registration could help artisans with limited digital experience.</p>
+        </div>
+        <div class="gap-item">
+          <h3>Affordability</h3>
+          <p>Product prices and applicable charges stay visible. Platform fees and operating costs will be confirmed before the team promises low or zero fees.</p>
+        </div>
+        <div class="gap-item">
+          <h3>Performance</h3>
+          <p>Organised product listings and enquiry records could help artisans track customer interest and follow up on orders.</p>
+        </div>
+        <div class="gap-item">
+          <h3>Local context</h3>
+          <p>A simple interface and potential Odia-language support could improve accessibility. The team will test these features with local artisans.</p>
+        </div>
+      </div>
+      <div class="opportunity">
+        <p class="eyebrow">Our opportunity</p>
+        <p class="statement">To create an accessible artisan-focused platform for product visibility, transparent pricing and direct buyer enquiries.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="idea" aria-labelledby="idea-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Proposed solution</p>
+        <h2 id="idea-h">One place for listings, prices and enquiries</h2>
+      </header>
+      <div class="idea-grid">
+        <div>
+          <p class="statement">Gaon To Growth is a proposed digital marketplace that helps Pattachitra artisans showcase handmade products, display prices and connect with potential buyers.</p>
+          <div class="approach" aria-label="Our approach">
+            <span>Simple listings.</span>
+            <span>Transparent prices.</span>
+            <span>Direct buyer enquiries.</span>
+          </div>
+        </div>
+        <ol class="flow">
+          <li class="step">
+            <span class="step-n">01</span>
+            <div class="step-b"><h3>Input</h3><p>Artisans create a profile, list handmade products and set their own prices.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-n">02</span>
+            <div class="step-b"><h3>Capture</h3><p>Each listing includes product photos, measurements, materials, price and artisan details.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-n">03</span>
+            <div class="step-b"><h3>Process</h3><p>The platform displays product information and records customer enquiries and orders.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-n">04</span>
+            <div class="step-b"><h3>Deliver</h3><p>Buyers contact artisans, while order, payment and delivery updates can be recorded where supported.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-n">05</span>
+            <div class="step-b"><h3>Impact</h3><p>The project aims to improve product visibility, price transparency and buyer communication.</p></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="sample" aria-labelledby="sample-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Prototype preview</p>
+        <h2 id="sample-h">What one listing could look like</h2>
+        <p class="muted">Artworks, artisans and prices on this page are examples. They are not real listings.</p>
+      </header>
+      <div class="sample">
+        <div class="art-wrap">
+          <div class="art" id="art"></div>
+          <p class="muted" style="font-size:.9rem">Illustration only. Real listings will show the artisan&rsquo;s own product photos.</p>
+        </div>
+        <div>
+          <div class="picks" id="picks" role="group" aria-label="Example listings"></div>
+          <dl class="spec">
+            <div><dt>Artwork</dt><dd id="f-name"></dd></div>
+            <div><dt>Materials</dt><dd id="f-mat"></dd></div>
+            <div><dt>Size</dt><dd id="f-size"></dd></div>
+            <div><dt>Artisan</dt><dd id="f-artisan"></dd></div>
+            <div><dt>Artisan&rsquo;s price</dt><dd><span class="price" id="f-price"></span> <span class="muted">set by the artisan (example)</span></dd></div>
+            <div><dt>Applicable charges</dt><dd>To be confirmed during the pilot</dd></div>
+          </dl>
+          <div class="detail-actions">
+            <button class="btn" type="button" id="enq-open" aria-expanded="false" aria-controls="enq">Send an enquiry</button>
+          </div>
+          <div class="enquiry" id="enq" hidden>
+            <form id="enq-form" novalidate>
+              <div class="stack">
+                <div class="field">
+                  <label for="enq-name">Your name</label>
+                  <input id="enq-name" name="name" type="text" autocomplete="name">
+                </div>
+                <div class="field">
+                  <label for="enq-contact">Phone or email</label>
+                  <input id="enq-contact" name="contact" type="text" autocomplete="off">
+                </div>
+                <div class="field">
+                  <label for="enq-msg">Message</label>
+                  <textarea id="enq-msg" name="msg" placeholder="Ask about the artwork or delivery."></textarea>
+                </div>
+                <div class="actions">
+                  <button class="btn" type="submit">Send enquiry</button>
+                  <button class="btn btn--ghost" type="button" id="enq-cancel">Cancel</button>
+                </div>
+                <p class="status" id="enq-status" role="status"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="build" aria-labelledby="build-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Tech stack and system design</p>
+        <h2 id="build-h">Simple tools the team can realistically build with</h2>
+      </header>
+      <div class="grid-3">
+        <div class="col">
+          <h3>Hardware</h3>
+          <p>Standard mobile phones and simple photography setups will be used to capture artisan products.</p>
+        </div>
+        <div class="col">
+          <h3>Software</h3>
+          <p>The website will use HTML, CSS and JavaScript, with Firebase or Supabase considered for storing product listings and order records.</p>
+        </div>
+        <div class="col">
+          <h3>Connectivity</h3>
+          <p>The platform will use internet access where available, with local facilitators assisting artisans who need digital support.</p>
+        </div>
+      </div>
+      <div class="sys" role="list" aria-label="System design">
+        <div class="sys-box" role="listitem">
+          <span class="label">Input</span>
+          <p>Artisan details, product images and prices.</p>
+        </div>
+        <div class="sys-box" role="listitem">
+          <span class="label">Processing</span>
+          <p>Product catalogue management, price display and order tracking.</p>
+        </div>
+        <div class="sys-box" role="listitem">
+          <span class="label">Output</span>
+          <p>Online product listings, customer enquiries and order updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ochre" id="impact" aria-labelledby="impact-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Target audience and impact</p>
+        <h2 id="impact-h">Who it is for and how we will measure benefit</h2>
+      </header>
+      <div class="grid-3">
+        <div class="col">
+          <h3>Primary users</h3>
+          <p>Pattachitra artisans in Raghurajpur can use the platform to showcase their products and manage buyer enquiries.</p>
+        </div>
+        <div class="col">
+          <h3>Beneficiaries</h3>
+          <p>The project aims to benefit artisan households, art lovers and future generations of craft workers through improved product visibility.</p>
+        </div>
+        <div class="col">
+          <h3>Early adopters</h3>
+          <p>Begin with a small group of volunteer artisan families after confirming their interest and participation.</p>
+        </div>
+      </div>
+      <div class="measures">
+        <h3>Possible measures of impact</h3>
+        <ul class="marks">
+          <li>Less time spent managing enquiries and orders.</li>
+          <li>Changes in selling expenses, where measurable.</li>
+          <li>Clearer records of prices and payments.</li>
+          <li>Number of active artisans and customers.</li>
+          <li>Changes in unsold stock, if reliably measured.</li>
+          <li>Number of artisans receiving orders.</li>
+          <li>Feedback from artisans and buyers.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="plan" aria-labelledby="plan-h">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="eyebrow">Sustainability and scalability</p>
+        <h2 id="plan-h">Keeping it useful, affordable and maintainable</h2>
+      </header>
+      <div class="grid-2">
+        <div class="col">
+          <h3>Financial</h3>
+          <p>Initial funding may come from institutional support, innovation grants or CSR sponsorships. The pilot budget and running costs will be confirmed before the team commits.</p>
+        </div>
+        <div class="col">
+          <h3>Environmental</h3>
+          <p>Reusing existing phones and using digital receipts where practical may reduce material use. Any reduction in packaging, travel or waste will be measured.</p>
+        </div>
+        <div class="col">
+          <h3>Social</h3>
+          <p>Simple interfaces, artisan participation and control over product pricing will support local ownership.</p>
+        </div>
+        <div class="col">
+          <h3>Scalability and maintenance</h3>
+          <p>After testing the pilot, trained local facilitators could help onboard more artisans and assess expansion to other craft clusters.</p>
+        </div>
+      </div>
+      <div class="pilot">
+        <div class="pilot-top">
+          <div class="stack-sm">
+            <span class="label">Next step</span>
+            <p>Develop and test a basic prototype.</p>
+          </div>
+          <div class="stack-sm">
+            <span class="label">Resources needed</span>
+            <div class="chips"><span class="chip">Phone</span><span class="chip">Website</span><span class="chip">Team</span></div>
+          </div>
+        </div>
+        <div class="timeline">
+          <span class="label">Timeline for the initial pilot: 8 to 12 weeks</span>
+          <div class="bar" role="img" aria-label="Pilot timeline: 8 weeks planned, extending to 12 weeks"><div class="solid"></div><div class="range"></div></div>
+          <div class="ticks" aria-hidden="true"><span>Week 0</span><span>4</span><span>8</span><span>12</span></div>
+          <p class="muted" style="font-size:.9rem">Solid: first 8 weeks. Hatched: possible extension up to 12 weeks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-dark" id="team" aria-labelledby="team-h">
+    <div class="patta" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="team-grid">
+        <div class="stack">
+          <h2 class="thanks" id="team-h" style="max-width:none">Thank you</h2>
+          <p class="statement">Let&rsquo;s turn ideas into impact.</p>
+        </div>
+        <div>
+          <dl class="team-list">
+            <div><dt>Team</dt><dd>Rural Rise</dd></div>
+            <div><dt>Theme</dt><dd>Gaon To Growth</dd></div>
+            <div><dt>Institution</dt><dd>Nalanda Institute of Technology, Bhubaneswar</dd></div>
+            <div>
+              <dt>Team leader</dt>
+              <dd>
+                Lalitaditya Mohapatra
+                <div class="phone-row">
+                  <span class="phone" id="phone">63722 38297</span>
+                  <button class="btn btn--ghost btn--small" type="button" id="copy-phone">Copy number</button>
+                </div>
+              </dd>
+            </div>
+            <div>
+              <dt>Members</dt>
+              <dd>
+                <ul class="members">
+                  <li><span>Ankit Sahoo</span><span class="muted">B.Tech (CSE)</span></li>
+                  <li><span>Aditya Barik</span><span class="muted">B.Tech (CSE)</span></li>
+                  <li><span>Arup Mohanty</span><span class="muted">B.Tech (CSE)</span></li>
+                  <li><span>S.B Gayatri Sahoo</span><span class="muted">B.Tech (CSE)</span></li>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+      <p class="foot-note">Gaon To Growth is a proposed project from Team Rural Rise for Innovate Odisha 3.0. Listings, artisans and prices shown in the sample are examples. Interviews, surveys and benefits described here are planned and still to be tested.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var SAMPLES = [
+    { name: 'Lotus panel', size: '30 × 30 cm', price: '₹ 2,400',
+      art: { petals: 12, w: 15, bg: '#1B1511', a: '#C0301C', b: '#E8AE1D', line: '#E8AE1D', core: '#F6F0E2' } },
+    { name: 'Sun wheel plate', size: '40 × 40 cm', price: '₹ 3,800',
+      art: { petals: 8, w: 19, bg: '#22386A', a: '#E8AE1D', b: '#F6F0E2', line: '#C0301C', core: '#C0301C' } },
+    { name: 'Petal ring scroll', size: '25 × 25 cm', price: '₹ 1,500',
+      art: { petals: 16, w: 11, bg: '#F6F0E2', a: '#1B1511', b: '#C0301C', line: '#22386A', core: '#E8AE1D' } }
+  ];
+
+  function mandala(o, label) {
+    var n = o.petals, step = 360 / n, w = o.w, i, a, s;
+    var outer = 'M0 -78C' + w + ' -64 ' + w + ' -44 0 -30C' + (-w) + ' -44 ' + (-w) + ' -64 0 -78Z';
+    var inner = 'M0 -48C8 -41 8 -30 0 -22C-8 -30 -8 -41 0 -48Z';
+    s = '<svg viewBox="-100 -100 200 200" role="img" aria-label="' + label + '" xmlns="http://www.w3.org/2000/svg">';
+    s += '<rect x="-100" y="-100" width="200" height="200" fill="' + o.bg + '"/>';
+    s += '<rect x="-93" y="-93" width="186" height="186" fill="none" stroke="' + o.line + '" stroke-width="1.5"/>';
+    for (i = 0; i < 32; i++) {
+      a = i * Math.PI * 2 / 32;
+      s += '<circle cx="' + (Math.cos(a) * 87).toFixed(2) + '" cy="' + (Math.sin(a) * 87).toFixed(2) + '" r="1.6" fill="' + o.line + '"/>';
+    }
+    for (i = 0; i < n; i++) {
+      s += '<path d="' + outer + '" transform="rotate(' + (i * step) + ')" fill="' + o.a + '" stroke="' + o.bg + '" stroke-width="1.5"/>';
+    }
+    for (i = 0; i < n; i++) {
+      s += '<path d="' + inner + '" transform="rotate(' + (i * step + step / 2) + ')" fill="' + o.b + '" stroke="' + o.bg + '" stroke-width="1"/>';
+    }
+    s += '<circle r="12" fill="' + o.core + '"/><circle r="6" fill="' + o.a + '"/>';
+    return s + '</svg>';
+  }
+
+  var picks = document.getElementById('picks');
+  var art = document.getElementById('art');
+  var current = 0;
+  var buttons = [];
+
+  function render(i) {
+    var s = SAMPLES[i];
+    current = i;
+    art.innerHTML = mandala(s.art, 'Example artwork motif: ' + s.name);
+    document.getElementById('f-name').textContent = s.name + ' (example)';
+    document.getElementById('f-mat').textContent = 'Hand-painted on prepared cloth';
+    document.getElementById('f-size').textContent = s.size;
+    document.getElementById('f-artisan').textContent = 'Artisan name and village appear here';
+    document.getElementById('f-price').textContent = s.price;
+    buttons.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+  }
+
+  SAMPLES.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick';
+    b.textContent = s.name;
+    b.addEventListener('click', function () { render(i); });
+    picks.appendChild(b);
+    buttons.push(b);
+  });
+  render(0);
+
+  var enq = document.getElementById('enq');
+  var open = document.getElementById('enq-open');
+  var status = document.getElementById('enq-status');
+  open.addEventListener('click', function () {
+    var show = enq.hidden;
+    enq.hidden = !show;
+    open.setAttribute('aria-expanded', show ? 'true' : 'false');
+    status.textContent = '';
+    if (show) { document.getElementById('enq-name').focus(); }
+  });
+  document.getElementById('enq-cancel').addEventListener('click', function () {
+    enq.hidden = true;
+    open.setAttribute('aria-expanded', 'false');
+    open.focus();
+  });
+  document.getElementById('enq-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('enq-name').value.trim();
+    var contact = document.getElementById('enq-contact').value.trim();
+    if (!name || !contact) {
+      status.textContent = 'Add your name and a phone number or email to continue.';
+      return;
+    }
+    status.textContent = 'Preview only. Your enquiry about the ' + SAMPLES[current].name + ' was not sent. In the pilot, enquiries would be recorded and shown to the artisan.';
+  });
+
+  var copyBtn = document.getElementById('copy-phone');
+  var phone = document.getElementById('phone');
+  function flash(msg) {
+    var old = copyBtn.textContent;
+    copyBtn.textContent = msg;
+    setTimeout(function () { copyBtn.textContent = old; }, 1800);
+  }
+  function selectPhone() {
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(phone);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(r);
+    } catch (err) { /* selection unavailable */ }
+  }
+  copyBtn.addEventListener('click', function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText('6372238297').then(
+        function () { flash('Copied'); },
+        function () { selectPhone(); flash('Number selected'); }
+      );
+    } else {
+      selectPhone();
+      flash('Number selected');
+    }
+  });
+})();
+</script>
+</body>
+</html>
